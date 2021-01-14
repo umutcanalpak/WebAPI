@@ -135,5 +135,26 @@ namespace WebAPI.Controllers
                 return new JsonResult("anonymous.png");
             }
         }
+
+        [Route("GetAllDepartmentNames")]
+        [HttpGet]
+        public JsonResult GetAllDepartmentNames()
+        {
+            string query = @"select DepartmentName from dbo.Department";
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+            SqlDataReader myreader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using SqlCommand myCommand = new SqlCommand(query, myCon);
+                myreader = myCommand.ExecuteReader();
+                table.Load(myreader);
+                myreader.Close();
+                myCon.Close();
+            }
+            return new JsonResult(table);
+        }
+
     }
 }
