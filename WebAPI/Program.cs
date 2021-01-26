@@ -13,6 +13,7 @@ namespace WebAPI
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("asdasdasd");
             CreateHostBuilder(args).Build().Run();
         }
 
